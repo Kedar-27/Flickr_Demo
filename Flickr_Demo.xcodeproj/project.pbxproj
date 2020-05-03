@@ -3,14 +3,20 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F91FF411245F399E008DC9ED /* FlickrJSONResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91FF410245F399E008DC9ED /* FlickrJSONResponseModel.swift */; };
+		F91FF414245F39F8008DC9ED /* FRPhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91FF413245F39F8008DC9ED /* FRPhotoCollectionViewCell.swift */; };
+		F957F8C2245F407200F15861 /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F957F8C1245F407200F15861 /* AppConstants.swift */; };
 		F98A2591245F243000001A05 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98A2590245F243000001A05 /* AppDelegate.swift */; };
-		F98A2598245F243000001A05 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F98A2596245F243000001A05 /* Main.storyboard */; };
 		F98A259A245F243400001A05 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F98A2599245F243400001A05 /* Assets.xcassets */; };
 		F98A259D245F243400001A05 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F98A259B245F243400001A05 /* LaunchScreen.storyboard */; };
+		F98A25A9245F283600001A05 /* FRMainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98A25A8245F283600001A05 /* FRMainTabBarController.swift */; };
+		F98A25AF245F29D200001A05 /* FRHomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98A25AE245F29D200001A05 /* FRHomeVC.swift */; };
+		F98A25B1245F2B1300001A05 /* FRSearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98A25B0245F2B1300001A05 /* FRSearchVC.swift */; };
+		F9E985AB245F3C430010DE87 /* KSNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E985AA245F3C430010DE87 /* KSNetworkManager.swift */; };
 		FB59A96D6C4FC4D5734F9353 /* Pods_Flickr_Demo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E26A782D954A9DE5C12D20E /* Pods_Flickr_Demo.framework */; };
 /* End PBXBuildFile section */
 
@@ -18,12 +24,18 @@
 		4E26A782D954A9DE5C12D20E /* Pods_Flickr_Demo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Flickr_Demo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		88D2694F65EC8BA9D79D8718 /* Pods-Flickr_Demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flickr_Demo.debug.xcconfig"; path = "Target Support Files/Pods-Flickr_Demo/Pods-Flickr_Demo.debug.xcconfig"; sourceTree = "<group>"; };
 		9C731FDB7703A21BF0754E85 /* Pods-Flickr_Demo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flickr_Demo.release.xcconfig"; path = "Target Support Files/Pods-Flickr_Demo/Pods-Flickr_Demo.release.xcconfig"; sourceTree = "<group>"; };
+		F91FF410245F399E008DC9ED /* FlickrJSONResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrJSONResponseModel.swift; sourceTree = "<group>"; };
+		F91FF413245F39F8008DC9ED /* FRPhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FRPhotoCollectionViewCell.swift; sourceTree = "<group>"; };
+		F957F8C1245F407200F15861 /* AppConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstants.swift; sourceTree = "<group>"; };
 		F98A258D245F243000001A05 /* Flickr_Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flickr_Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F98A2590245F243000001A05 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		F98A2597245F243000001A05 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		F98A2599245F243400001A05 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F98A259C245F243400001A05 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F98A259E245F243400001A05 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F98A25A8245F283600001A05 /* FRMainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FRMainTabBarController.swift; sourceTree = "<group>"; };
+		F98A25AE245F29D200001A05 /* FRHomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FRHomeVC.swift; sourceTree = "<group>"; };
+		F98A25B0245F2B1300001A05 /* FRSearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FRSearchVC.swift; sourceTree = "<group>"; };
+		F9E985AA245F3C430010DE87 /* KSNetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KSNetworkManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,8 +56,23 @@
 				88D2694F65EC8BA9D79D8718 /* Pods-Flickr_Demo.debug.xcconfig */,
 				9C731FDB7703A21BF0754E85 /* Pods-Flickr_Demo.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		F91FF412245F39AA008DC9ED /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				F91FF410245F399E008DC9ED /* FlickrJSONResponseModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		F91FF415245F3A08008DC9ED /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				F91FF413245F39F8008DC9ED /* FRPhotoCollectionViewCell.swift */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 		F98A2584245F243000001A05 = {
@@ -70,12 +97,90 @@
 			isa = PBXGroup;
 			children = (
 				F98A2590245F243000001A05 /* AppDelegate.swift */,
-				F98A2596245F243000001A05 /* Main.storyboard */,
+				F98A25A6245F27E400001A05 /* Main Tab Bar */,
+				F98A25AB245F290500001A05 /* FRHome */,
+				F98A25AC245F292400001A05 /* FRSearch */,
+				F98A25AA245F28F800001A05 /* Helper */,
+				F98A25A4245F27A400001A05 /* Manager */,
 				F98A2599245F243400001A05 /* Assets.xcassets */,
 				F98A259B245F243400001A05 /* LaunchScreen.storyboard */,
 				F98A259E245F243400001A05 /* Info.plist */,
 			);
 			path = Flickr_Demo;
+			sourceTree = "<group>";
+		};
+		F98A25A4245F27A400001A05 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				F98A25A5245F27AC00001A05 /* Network Manager */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
+		F98A25A5245F27AC00001A05 /* Network Manager */ = {
+			isa = PBXGroup;
+			children = (
+				F9E985AA245F3C430010DE87 /* KSNetworkManager.swift */,
+			);
+			path = "Network Manager";
+			sourceTree = "<group>";
+		};
+		F98A25A6245F27E400001A05 /* Main Tab Bar */ = {
+			isa = PBXGroup;
+			children = (
+				F98A25A7245F27F600001A05 /* Controller */,
+			);
+			path = "Main Tab Bar";
+			sourceTree = "<group>";
+		};
+		F98A25A7245F27F600001A05 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				F98A25A8245F283600001A05 /* FRMainTabBarController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		F98A25AA245F28F800001A05 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				F957F8C1245F407200F15861 /* AppConstants.swift */,
+			);
+			path = Helper;
+			sourceTree = "<group>";
+		};
+		F98A25AB245F290500001A05 /* FRHome */ = {
+			isa = PBXGroup;
+			children = (
+				F91FF415245F3A08008DC9ED /* Cell */,
+				F91FF412245F39AA008DC9ED /* Model */,
+				F98A25AD245F29AC00001A05 /* Controller */,
+			);
+			path = FRHome;
+			sourceTree = "<group>";
+		};
+		F98A25AC245F292400001A05 /* FRSearch */ = {
+			isa = PBXGroup;
+			children = (
+				F98A25B2245F2B1800001A05 /* Controller */,
+			);
+			path = FRSearch;
+			sourceTree = "<group>";
+		};
+		F98A25AD245F29AC00001A05 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				F98A25AE245F29D200001A05 /* FRHomeVC.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		F98A25B2245F2B1800001A05 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				F98A25B0245F2B1300001A05 /* FRSearchVC.swift */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 		FBDA9514127AB9CEB0E695AC /* Frameworks */ = {
@@ -114,6 +219,7 @@
 		F98A2585245F243000001A05 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = FR;
 				LastSwiftUpdateCheck = 1140;
 				LastUpgradeCheck = 1140;
 				ORGANIZATIONNAME = "Kedar-27";
@@ -148,7 +254,6 @@
 			files = (
 				F98A259D245F243400001A05 /* LaunchScreen.storyboard in Resources */,
 				F98A259A245F243400001A05 /* Assets.xcassets in Resources */,
-				F98A2598245F243000001A05 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -201,21 +306,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F9E985AB245F3C430010DE87 /* KSNetworkManager.swift in Sources */,
+				F98A25A9245F283600001A05 /* FRMainTabBarController.swift in Sources */,
 				F98A2591245F243000001A05 /* AppDelegate.swift in Sources */,
+				F957F8C2245F407200F15861 /* AppConstants.swift in Sources */,
+				F98A25B1245F2B1300001A05 /* FRSearchVC.swift in Sources */,
+				F98A25AF245F29D200001A05 /* FRHomeVC.swift in Sources */,
+				F91FF411245F399E008DC9ED /* FlickrJSONResponseModel.swift in Sources */,
+				F91FF414245F39F8008DC9ED /* FRPhotoCollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		F98A2596245F243000001A05 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				F98A2597245F243000001A05 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		F98A259B245F243400001A05 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
