@@ -1,2 +1,2 @@
 # Flickr_Demo
-A demo application for image viewing using MVVM and Flickr rest api's.
+A demo application of image gallery app using MVVM and Flickr Rest api's.
