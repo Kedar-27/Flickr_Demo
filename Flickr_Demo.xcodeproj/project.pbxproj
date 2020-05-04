@@ -10,6 +10,7 @@
 		F91FF411245F399E008DC9ED /* FlickrJSONResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91FF410245F399E008DC9ED /* FlickrJSONResponseModel.swift */; };
 		F91FF414245F39F8008DC9ED /* FRPhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91FF413245F39F8008DC9ED /* FRPhotoCollectionViewCell.swift */; };
 		F957F8C2245F407200F15861 /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F957F8C1245F407200F15861 /* AppConstants.swift */; };
+		F957F8C5246040E200F15861 /* FRHomeStickyHeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F957F8C4246040E200F15861 /* FRHomeStickyHeaderCollectionReusableView.swift */; };
 		F98A2591245F243000001A05 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98A2590245F243000001A05 /* AppDelegate.swift */; };
 		F98A259A245F243400001A05 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F98A2599245F243400001A05 /* Assets.xcassets */; };
 		F98A259D245F243400001A05 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F98A259B245F243400001A05 /* LaunchScreen.storyboard */; };
@@ -27,6 +28,7 @@
 		F91FF410245F399E008DC9ED /* FlickrJSONResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrJSONResponseModel.swift; sourceTree = "<group>"; };
 		F91FF413245F39F8008DC9ED /* FRPhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FRPhotoCollectionViewCell.swift; sourceTree = "<group>"; };
 		F957F8C1245F407200F15861 /* AppConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstants.swift; sourceTree = "<group>"; };
+		F957F8C4246040E200F15861 /* FRHomeStickyHeaderCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FRHomeStickyHeaderCollectionReusableView.swift; sourceTree = "<group>"; };
 		F98A258D245F243000001A05 /* Flickr_Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flickr_Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F98A2590245F243000001A05 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F98A2599245F243400001A05 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -73,6 +75,14 @@
 				F91FF413245F39F8008DC9ED /* FRPhotoCollectionViewCell.swift */,
 			);
 			path = Cell;
+			sourceTree = "<group>";
+		};
+		F957F8C3246040AB00F15861 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				F957F8C4246040E200F15861 /* FRHomeStickyHeaderCollectionReusableView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		F98A2584245F243000001A05 = {
@@ -152,6 +162,7 @@
 		F98A25AB245F290500001A05 /* FRHome */ = {
 			isa = PBXGroup;
 			children = (
+				F957F8C3246040AB00F15861 /* View */,
 				F91FF415245F3A08008DC9ED /* Cell */,
 				F91FF412245F39AA008DC9ED /* Model */,
 				F98A25AD245F29AC00001A05 /* Controller */,
@@ -306,6 +317,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F957F8C5246040E200F15861 /* FRHomeStickyHeaderCollectionReusableView.swift in Sources */,
 				F9E985AB245F3C430010DE87 /* KSNetworkManager.swift in Sources */,
 				F98A25A9245F283600001A05 /* FRMainTabBarController.swift in Sources */,
 				F98A2591245F243000001A05 /* AppDelegate.swift in Sources */,

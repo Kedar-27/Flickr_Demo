@@ -15,7 +15,7 @@ class FRHomeVC: UIViewController {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.minimumLineSpacing = UIScreen.main.bounds.height * 0.045
-        layout.sectionHeadersPinToVisibleBounds = false
+        layout.sectionHeadersPinToVisibleBounds = true
         layout.minimumInteritemSpacing = UIScreen.main.bounds.width * 0.025
         layout.sectionInset = UIEdgeInsets(top: UIScreen.main.bounds.height * 0.02, left: UIScreen.main.bounds.width * 0.025, bottom: UIScreen.main.bounds.height * 0.02, right: UIScreen.main.bounds.width * 0.025)
         let collectionView = UICollectionView(frame: .zero,collectionViewLayout: layout)
@@ -35,13 +35,12 @@ class FRHomeVC: UIViewController {
     }()
     
     
-    // MARK: - Properties
-    var recentImages = [Photo](){
-        didSet{
-            self.photosCollectionView.reloadData()
-        }
-    }
     
+    
+    
+    // MARK: - Properties
+    
+    var recentImagesDict = [Int: [Photo]]()
     var pageNo = 0
     
     
@@ -69,12 +68,13 @@ class FRHomeVC: UIViewController {
     
     private func setupVC(){
         self.view.backgroundColor = .white
-        self.view.addSubview(self.activityIndicator)
+       // self.view.addSubview(self.activityIndicator)
         self.view.addSubview(self.photosCollectionView)
         
         self.photosCollectionView.dataSource = self
         self.photosCollectionView.delegate = self
         self.photosCollectionView.register(FRPhotoCollectionViewCell.self, forCellWithReuseIdentifier: "FRPhotoCollectionViewCell")
+        self.photosCollectionView.register(FRHomeStickyHeaderCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "FRHomeStickyHeaderCollectionReusableView")
         
     }
     
@@ -85,15 +85,15 @@ class FRHomeVC: UIViewController {
     
     private func setupConstraints(){
         [
-        self.photosCollectionView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-        self.photosCollectionView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
-        self.photosCollectionView.widthAnchor.constraint(equalTo: self.view.widthAnchor),
-        self.photosCollectionView.heightAnchor.constraint(equalTo: self.view.heightAnchor),
+        self.photosCollectionView.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor),
+        self.photosCollectionView.centerYAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerYAnchor),
+        self.photosCollectionView.widthAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.widthAnchor),
+        self.photosCollectionView.heightAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.heightAnchor),
             
-        self.activityIndicator.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-        self.activityIndicator.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
-        self.activityIndicator.widthAnchor.constraint(equalToConstant: 30),
-        self.activityIndicator.heightAnchor.constraint(equalToConstant: 40)
+//        self.activityIndicator.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+//        self.activityIndicator.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
+//        self.activityIndicator.widthAnchor.constraint(equalToConstant: 30),
+//        self.activityIndicator.heightAnchor.constraint(equalToConstant: 40)
             
             
         ].forEach({$0.isActive = true})
@@ -119,14 +119,19 @@ class FRHomeVC: UIViewController {
                         case .success(let data):
                             DispatchQueue.main.async { [weak self] in
                                 guard let strongSelf = self else {return}
-                                strongSelf.recentImages.append(contentsOf:  data.photos.photo.filter({ (photo) -> Bool in
-                                    return !strongSelf.recentImages.contains(where: {$0.id == photo.id})
-                                }))
+                                
+                                strongSelf.recentImagesDict[strongSelf.pageNo] = data.photos.photo.filter({ (photo) -> Bool in
+                                    return !(strongSelf.recentImagesDict[strongSelf.pageNo]?.contains(where: {$0.id == photo.id}) ?? false)
+                                })
+                                
+                                
+                                strongSelf.photosCollectionView.reloadData()
                             }
                             break
                             
                         case .failure(let error):
                             print(error)
+                            self?.pageNo -= 1
                             break
                         }
                         
@@ -135,6 +140,7 @@ class FRHomeVC: UIViewController {
                 break
                 
             case .failure(let error):
+                self?.pageNo -= 1
                 print(error)
                 break
             }
@@ -148,17 +154,26 @@ class FRHomeVC: UIViewController {
     
 }
 extension FRHomeVC: UICollectionViewDelegate, UICollectionViewDataSource , UICollectionViewDelegateFlowLayout{
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return self.recentImagesDict.keys.count
+    }
+    
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.recentImages.count
+        
+        let sectionKey = Array(self.recentImagesDict.keys.sorted())[section]
+        
+        return self.recentImagesDict[sectionKey]?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FRPhotoCollectionViewCell", for: indexPath) as? FRPhotoCollectionViewCell else{return UICollectionViewCell()}
+        let sectionKey = Array(self.recentImagesDict.keys.sorted())[indexPath.section]
+        let data = self.recentImagesDict[sectionKey]?[indexPath.item]
         
-        let data = self.recentImages[indexPath.item]
-        
-        cell.configureCell(image: data.urlS)
+        cell.configureCell(image: data?.urlS ?? "")
         
         
         return cell
@@ -179,7 +194,9 @@ extension FRHomeVC: UICollectionViewDelegate, UICollectionViewDataSource , UICol
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if indexPath.item == self.recentImages.count - 4{
+        let sectionKey = Array(self.recentImagesDict.keys.sorted())[indexPath.section]
+
+        if let data = self.recentImagesDict[sectionKey], indexPath.item == data.count - 4{
             self.pageNo += 1
             self.getRecentImages(pageNo: self.pageNo)
         }
@@ -192,4 +209,46 @@ extension FRHomeVC: UICollectionViewDelegate, UICollectionViewDataSource , UICol
         
     }
     
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        switch kind {
+            
+                
+        case UICollectionView.elementKindSectionHeader:
+            
+            guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "FRHomeStickyHeaderCollectionReusableView", for: indexPath) as? FRHomeStickyHeaderCollectionReusableView else{return UICollectionReusableView()}
+            
+            let sectionKey = Array(self.recentImagesDict.keys.sorted())[indexPath.section]
+
+            headerView.configureView(title: "\(sectionKey)")
+            
+            
+            return headerView
+            
+    
+            
+        default:
+            
+            return UICollectionReusableView()
+        }
+
+        
+        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: collectionView.frame.width, height: UIScreen.main.bounds.width * 0.1)
+    }
+    
+    
+
+
 }
+
+
+
+
+
+
+
+
