@@ -29,19 +29,27 @@ class FRHomeVC: UIViewController {
        let activityIndicator = UIActivityIndicatorView()
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         activityIndicator.color = .black
+        activityIndicator.startAnimating()
         activityIndicator.hidesWhenStopped = true
         activityIndicator.style = .large
         return activityIndicator
     }()
     
     
+    var bottomLoadingIndicatorView: UIView = {
+       var bottomView =  UIView()
+        bottomView.translatesAutoresizingMaskIntoConstraints = false
+        bottomView.backgroundColor = .white
+        return bottomView
+    }()
     
     
-    
+
     // MARK: - Properties
-    
+    var isNewDataLoading = false
     var recentImagesDict = [Int: [Photo]]()
     var pageNo = 0
+    var bottomLoadingIndicatorBottomConstraint: NSLayoutConstraint?
     
     
     // MARK: - UIViewController
@@ -68,9 +76,11 @@ class FRHomeVC: UIViewController {
     
     private func setupVC(){
         self.view.backgroundColor = .white
-       // self.view.addSubview(self.activityIndicator)
+        self.view.addSubview(self.bottomLoadingIndicatorView)
         self.view.addSubview(self.photosCollectionView)
-        
+        self.view.bringSubviewToFront(self.bottomLoadingIndicatorView)
+        self.bottomLoadingIndicatorView.addSubview(self.activityIndicator)
+    
         self.photosCollectionView.dataSource = self
         self.photosCollectionView.delegate = self
         self.photosCollectionView.register(FRPhotoCollectionViewCell.self, forCellWithReuseIdentifier: "FRPhotoCollectionViewCell")
@@ -84,30 +94,53 @@ class FRHomeVC: UIViewController {
     }
     
     private func setupConstraints(){
+        
+        self.bottomLoadingIndicatorBottomConstraint = self.bottomLoadingIndicatorView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor)
+        
         [
         self.photosCollectionView.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor),
         self.photosCollectionView.centerYAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerYAnchor),
         self.photosCollectionView.widthAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.widthAnchor),
         self.photosCollectionView.heightAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.heightAnchor),
             
-//        self.activityIndicator.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-//        self.activityIndicator.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
-//        self.activityIndicator.widthAnchor.constraint(equalToConstant: 30),
-//        self.activityIndicator.heightAnchor.constraint(equalToConstant: 40)
+        self.bottomLoadingIndicatorView.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 1),
+        self.bottomLoadingIndicatorView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+        self.bottomLoadingIndicatorView.heightAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.2),
+        self.bottomLoadingIndicatorBottomConstraint!,
+        
+        self.activityIndicator.centerXAnchor.constraint(equalTo: self.bottomLoadingIndicatorView.centerXAnchor),
+        self.activityIndicator.centerYAnchor.constraint(equalTo: self.bottomLoadingIndicatorView.centerYAnchor),
+        self.activityIndicator.widthAnchor.constraint(equalToConstant: 30),
+        self.activityIndicator.heightAnchor.constraint(equalToConstant: 40)
             
             
         ].forEach({$0.isActive = true})
     }
+    
+    // MARK: - Bottom Loading Indicator Animation
+    
+    func showLoadingIndicator(_ value: Bool){
+        DispatchQueue.main.async { [weak self] in
+            guard let strongSelf = self else {return}
+            strongSelf.bottomLoadingIndicatorBottomConstraint?.constant =  value ? 0 : 200
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0.0, options: [] , animations: {
+                strongSelf.view.layoutIfNeeded()
+            }, completion: nil)
+        }
+
+
+    }
+    
+
+    
+    
     // MARK: - Network Requests
     func getRecentImages(pageNo: Int){
-        self.activityIndicator.startAnimating()
+        self.showLoadingIndicator(true)
         KSNetworkManager.shared.sendRequest(methodType: .get, apiName: AppConstants.baseURL, parameters:["method":"flickr.photos.getRecent","per_page": "20","page": pageNo ,"api_key" : AppConstants.apiKey , "nojsoncallback": 1 , "extras": "url_s", "format": "json"], headers: nil) {[weak self] (result) in
-            DispatchQueue.main.async { [weak self] in
-                guard let strongSelf = self else {return}
-                strongSelf.activityIndicator.stopAnimating()
-            }
 
-            
+            self?.showLoadingIndicator(false)
+
             
             switch result{
         

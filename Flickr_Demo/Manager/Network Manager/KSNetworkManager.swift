@@ -65,6 +65,9 @@ public class KSNetworkManager: NSObject {
             
             let urlString = baseUrl + apiName
             
+            print(urlString)
+            
+            
             self.alamoFireManager!.request(urlString,
                                            method: methodType,
                                            parameters: parameters ,

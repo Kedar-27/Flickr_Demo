@@ -11,6 +11,8 @@
 		F91FF414245F39F8008DC9ED /* FRPhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91FF413245F39F8008DC9ED /* FRPhotoCollectionViewCell.swift */; };
 		F957F8C2245F407200F15861 /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F957F8C1245F407200F15861 /* AppConstants.swift */; };
 		F957F8C5246040E200F15861 /* FRHomeStickyHeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F957F8C4246040E200F15861 /* FRHomeStickyHeaderCollectionReusableView.swift */; };
+		F957F8C92460C17F00F15861 /* FRPhoto.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F957F8C72460C17F00F15861 /* FRPhoto.xcdatamodeld */; };
+		F957F8CB2460C19400F15861 /* KSDatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F957F8CA2460C19400F15861 /* KSDatabaseManager.swift */; };
 		F98A2591245F243000001A05 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98A2590245F243000001A05 /* AppDelegate.swift */; };
 		F98A259A245F243400001A05 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F98A2599245F243400001A05 /* Assets.xcassets */; };
 		F98A259D245F243400001A05 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F98A259B245F243400001A05 /* LaunchScreen.storyboard */; };
@@ -29,6 +31,8 @@
 		F91FF413245F39F8008DC9ED /* FRPhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FRPhotoCollectionViewCell.swift; sourceTree = "<group>"; };
 		F957F8C1245F407200F15861 /* AppConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstants.swift; sourceTree = "<group>"; };
 		F957F8C4246040E200F15861 /* FRHomeStickyHeaderCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FRHomeStickyHeaderCollectionReusableView.swift; sourceTree = "<group>"; };
+		F957F8C82460C17F00F15861 /* FRPhoto.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FRPhoto.xcdatamodel; sourceTree = "<group>"; };
+		F957F8CA2460C19400F15861 /* KSDatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KSDatabaseManager.swift; sourceTree = "<group>"; };
 		F98A258D245F243000001A05 /* Flickr_Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flickr_Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F98A2590245F243000001A05 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F98A2599245F243400001A05 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -85,6 +89,15 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		F957F8C62460BFA000F15861 /* Database Manager */ = {
+			isa = PBXGroup;
+			children = (
+				F957F8CA2460C19400F15861 /* KSDatabaseManager.swift */,
+				F957F8C72460C17F00F15861 /* FRPhoto.xcdatamodeld */,
+			);
+			path = "Database Manager";
+			sourceTree = "<group>";
+		};
 		F98A2584245F243000001A05 = {
 			isa = PBXGroup;
 			children = (
@@ -122,6 +135,7 @@
 		F98A25A4245F27A400001A05 /* Manager */ = {
 			isa = PBXGroup;
 			children = (
+				F957F8C62460BFA000F15861 /* Database Manager */,
 				F98A25A5245F27AC00001A05 /* Network Manager */,
 			);
 			path = Manager;
@@ -317,8 +331,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F957F8C92460C17F00F15861 /* FRPhoto.xcdatamodeld in Sources */,
 				F957F8C5246040E200F15861 /* FRHomeStickyHeaderCollectionReusableView.swift in Sources */,
 				F9E985AB245F3C430010DE87 /* KSNetworkManager.swift in Sources */,
+				F957F8CB2460C19400F15861 /* KSDatabaseManager.swift in Sources */,
 				F98A25A9245F283600001A05 /* FRMainTabBarController.swift in Sources */,
 				F98A2591245F243000001A05 /* AppDelegate.swift in Sources */,
 				F957F8C2245F407200F15861 /* AppConstants.swift in Sources */,
@@ -515,6 +531,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		F957F8C72460C17F00F15861 /* FRPhoto.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				F957F8C82460C17F00F15861 /* FRPhoto.xcdatamodel */,
+			);
+			currentVersion = F957F8C82460C17F00F15861 /* FRPhoto.xcdatamodel */;
+			path = FRPhoto.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = F98A2585245F243000001A05 /* Project object */;
 }
