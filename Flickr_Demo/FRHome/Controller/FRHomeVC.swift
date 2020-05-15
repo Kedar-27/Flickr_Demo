@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import CoreData
+
 
 class FRHomeVC: UIViewController {
 
@@ -35,7 +37,6 @@ class FRHomeVC: UIViewController {
         return activityIndicator
     }()
     
-    
     var bottomLoadingIndicatorView: UIView = {
        var bottomView =  UIView()
         bottomView.translatesAutoresizingMaskIntoConstraints = false
@@ -43,11 +44,15 @@ class FRHomeVC: UIViewController {
         return bottomView
     }()
     
-    
 
     // MARK: - Properties
     var isNewDataLoading = false
-    var recentImagesDict = [Int: [Photo]]()
+    var recentImages = [FRPage](){
+        didSet{
+            self.photosCollectionView.reloadData()
+        }
+    }
+    
     var pageNo = 0
     var bottomLoadingIndicatorBottomConstraint: NSLayoutConstraint?
     
@@ -57,6 +62,7 @@ class FRHomeVC: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         self.setupVC()
+        self.setupCoreData()
         self.setupConstraints()
         self.getRecentImages(pageNo: self.pageNo)
     }
@@ -93,8 +99,8 @@ class FRHomeVC: UIViewController {
         
     }
     
+
     private func setupConstraints(){
-        
         self.bottomLoadingIndicatorBottomConstraint = self.bottomLoadingIndicatorView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor)
         
         [
@@ -130,8 +136,41 @@ class FRHomeVC: UIViewController {
 
 
     }
-    
+        
+    // MARK: - Core Data Helper
+    private func setupCoreData(){
+        KSCoreDataManager.shared.modelName = "FRPhoto"
+    }
 
+    private func fetchPages() -> [FRPage]{
+        return KSCoreDataManager.shared.fetchRequest(entity: FRPage.self)
+    }
+    
+    
+    
+    private func savePhotosToCoreData(_ photos: Photos){
+        let context =  KSCoreDataManager.shared.backgroundContext
+        
+        let frPage = FRPage(context: context)
+        frPage.pageNo = Int32(photos.page)
+
+        for photo in photos.photo{
+            let coreDataPhoto = FRPhoto(context: context)
+            coreDataPhoto.id = photo.id
+            coreDataPhoto.imageURL = photo.urlS
+            frPage.addToPhotos(coreDataPhoto)
+        }
+        KSCoreDataManager.shared.saveChanges()
+        
+        //update ui from save data in  db
+        self.recentImages = self.fetchPages()
+
+        
+        
+        
+    }
+        
+    
     
     
     // MARK: - Network Requests
@@ -153,12 +192,13 @@ class FRHomeVC: UIViewController {
                             DispatchQueue.main.async { [weak self] in
                                 guard let strongSelf = self else {return}
                                 
-                                strongSelf.recentImagesDict[strongSelf.pageNo] = data.photos.photo.filter({ (photo) -> Bool in
-                                    return !(strongSelf.recentImagesDict[strongSelf.pageNo]?.contains(where: {$0.id == photo.id}) ?? false)
-                                })
+//                                strongSelf.recentImagesDict[strongSelf.pageNo] = data.photos.photo.filter({ (photo) -> Bool in
+//                                    return !(strongSelf.recentImagesDict[strongSelf.pageNo]?.contains(where: {$0.id == photo.id}) ?? false)
+//                                })
+                                strongSelf.savePhotosToCoreData(data.photos)
                                 
                                 
-                                strongSelf.photosCollectionView.reloadData()
+                                
                             }
                             break
                             
@@ -174,6 +214,7 @@ class FRHomeVC: UIViewController {
                 
             case .failure(let error):
                 self?.pageNo -= 1
+                self?.recentImages = self?.fetchPages() ?? []
                 print(error)
                 break
             }
@@ -189,24 +230,21 @@ class FRHomeVC: UIViewController {
 extension FRHomeVC: UICollectionViewDelegate, UICollectionViewDataSource , UICollectionViewDelegateFlowLayout{
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return self.recentImagesDict.keys.count
+        return self.recentImages.count
     }
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
-        let sectionKey = Array(self.recentImagesDict.keys.sorted())[section]
-        
-        return self.recentImagesDict[sectionKey]?.count ?? 0
+        return self.recentImages[section].photos?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FRPhotoCollectionViewCell", for: indexPath) as? FRPhotoCollectionViewCell else{return UICollectionViewCell()}
-        let sectionKey = Array(self.recentImagesDict.keys.sorted())[indexPath.section]
-        let data = self.recentImagesDict[sectionKey]?[indexPath.item]
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FRPhotoCollectionViewCell", for: indexPath)as? FRPhotoCollectionViewCell, let data = (self.recentImages[indexPath.section].photos?.allObjects as? [FRPhoto])?[indexPath.item]  else{return UICollectionViewCell()}
         
-        cell.configureCell(image: data?.urlS ?? "")
+        
+        
+        cell.configureCell(image: data.imageURL ?? "")
         
         
         return cell
@@ -227,9 +265,8 @@ extension FRHomeVC: UICollectionViewDelegate, UICollectionViewDataSource , UICol
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        let sectionKey = Array(self.recentImagesDict.keys.sorted())[indexPath.section]
-
-        if let data = self.recentImagesDict[sectionKey], indexPath.item == data.count - 4{
+        
+        if let data = (self.recentImages[indexPath.section].photos?.allObjects as? [FRPhoto]), indexPath.item == data.count - 4{
             self.pageNo += 1
             self.getRecentImages(pageNo: self.pageNo)
         }
@@ -251,10 +288,9 @@ extension FRHomeVC: UICollectionViewDelegate, UICollectionViewDataSource , UICol
             
             guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "FRHomeStickyHeaderCollectionReusableView", for: indexPath) as? FRHomeStickyHeaderCollectionReusableView else{return UICollectionReusableView()}
             
-            let sectionKey = Array(self.recentImagesDict.keys.sorted())[indexPath.section]
-
-            headerView.configureView(title: "\(sectionKey)")
             
+            headerView.configureView(title: "\(indexPath.section)")
+
             
             return headerView
             

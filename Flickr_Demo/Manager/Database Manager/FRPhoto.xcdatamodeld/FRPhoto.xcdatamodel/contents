@@ -1,4 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19E287" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <elements/>
+    <entity name="FRPage" representedClassName="FRPage" syncable="YES" codeGenerationType="class">
+        <attribute name="pageNo" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="photos" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="FRPhoto" inverseName="page" inverseEntity="FRPhoto"/>
+    </entity>
+    <entity name="FRPhoto" representedClassName="FRPhoto" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="imageURL" optional="YES" attributeType="String"/>
+        <relationship name="page" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FRPage" inverseName="photos" inverseEntity="FRPage"/>
+    </entity>
+    <elements>
+        <element name="FRPage" positionX="-54" positionY="9" width="128" height="73"/>
+        <element name="FRPhoto" positionX="-63" positionY="-18" width="128" height="88"/>
+    </elements>
 </model>

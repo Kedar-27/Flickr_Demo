@@ -19,6 +19,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.setupInitialVC()
         return true
     }
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        KSCoreDataManager.shared.saveChanges()
+    }
+    
+
+    func applicationWillTerminate(_ application: UIApplication) {
+        KSCoreDataManager.shared.saveChanges()
+    }
 
     // MARK: - Setup Initial VC
     func setupInitialVC(){
